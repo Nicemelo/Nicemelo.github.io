@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Задание 1</title>
+</head>
+<body>
+
+<h1 id="top">Гиперссылки</h1>
+
+<ul>
+  <li><a href="http://kubsu.ru/" title="Официальный сайт Кубанского государственного университета">1. КубГУ (http)</a></li>
+  <li><a href="https://kubsu.ru/" title="Официальный сайт Кубанского государственного университета">2. КубГУ (https)</a></li>
+  <li><a href="https://kubsu.ru/"><img src="KybSU.png" alt="КубГУ" width="100"></a> — 3. ссылка-картинка</li>
+  <li><a href="/ru/university">4. сокращённая ссылка на внутреннюю страницу</a></li>
+  <li><a href="/">5. сокращённая ссылка на главную страницу</a></li>
+  <li><a href="#form">6. ссылка на фрагмент текущей страницы</a></li>
+  <li><a href="https://kubsu.ru/?a=1&amp;b=2&amp;c=3">7. ссылка с тремя параметрами в URL</a></li>
+  <li><a href="https://kubsu.ru/?id=123">8. ссылка с параметром id в URL</a></li>
+  <li><a href="page.html">9. относительная на страницу в текущем каталоге</a></li>
+  <li><a href="about/page.html">10. относительная на страницу в каталоге about</a></li>
+  <li><a href="../page.html">11. относительная на страницу уровнем выше</a></li>
+  <li><a href="../../page.html">12. относительная на страницу двумя уровнями выше</a></li>
+  <li>13. Контекстная ссылка: <a href="https://kubsu.ru/ru/university">перейти в раздел об университете</a>.</li>
+  <li><a href="https://ru.wikipedia.org/wiki/HTML#История">14. ссылка на фрагмент стороннего сайта</a></li>
+  <li>15. Карта:
+    <img src="kbadrat.svg" alt="Карта" usemap="#m" width="300" height="200">
+<map name="m">
+  <area shape="rect" coords="20,40,140,160" href="https://kubsu.ru/ru/university" alt="Прямоугольник">
+  <area shape="circle" coords="220,100,50" href="https://kubsu.ru/ru" alt="Круг">
+</map>
+  </li>
+  <li><a href="">16. ссылка с пустым href</a></li>
+  <li><a>17. ссылка без href</a></li>
+  <li><a href="https://www.google.com/" rel="nofollow">18. ссылка с rel="nofollow"</a></li>
+  <li><noindex><a href="https://www.yandex.ru/">19. ссылка, запрещённая для индексации</a></noindex></li>
+  <li>20.
+    <ol>
+      <li><a href="https://kubsu.ru/ru/university" title="Об университете">Университет</a></li>
+      <li><a href="https://kubsu.ru/ru/sveden" title="Сведения об образовательной организации">Сведения об ОО</a></li>
+      <li><a href="https://kubsu.ru/ru/studentam" title="Студентам">Студентам</a></li>
+    </ol>
+  </li>
+  <li><a href="ftp://user:password@example.com/myfile.zip">21. FTP с авторизацией</a></li>
+</ul>
+
+<h2 id="form">Форма</h2>
+
+<form action="/" method="POST">
+  <label>ФИО:<br><input type="text" name="fio"></label><br>
+  <label>Телефон:<br><input type="tel" name="phone"></label><br>
+  <label>E-mail:<br><input type="email" name="email"></label><br>
+  <label>Дата рождения:<br><input type="date" name="date"></label><br>
+
+  Пол:
+  <label><input type="radio" name="g" value="m"> М</label>
+  <label><input type="radio" name="g" value="f"> Ж</label><br>
+
+  <label>Языки:<br>
+    <select name="lang[]" multiple size="11">
+      <option>Pascal</option><option>C</option><option>C++</option>
+      <option>JavaScript</option><option>PHP</option><option>Python</option>
+      <option>Java</option><option>Haskell</option><option>Clojure</option>
+      <option>Prolog</option><option>Scala</option>
+    </select>
+  </label><br>
+
+  <label>Биография:<br><textarea name="bio" rows="4" cols="40"></textarea></label><br>
+
+  <label><input type="checkbox" name="ok"> С контрактом ознакомлен(а)</label><br>
+
+  <button type="submit">Сохранить</button>
+</form>
+
+<p><a href="#top">Наверх</a></p>
+
+</body>
+</html>
