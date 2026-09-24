@@ -1,0 +1,207 @@
+/* ===== Базовые настройки ===== */
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #222;
+    background-color: #f5f7fa;
+  }
+  
+  a {
+    color: #1f5ea8;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #d94a4a;
+    text-decoration: underline;
+  }
+  
+  /* ===== Контейнер 960px по центру ===== */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* ===== Шапка ===== */
+  #header {
+    width: 100%;
+    background-color: #4a7bb8;
+    color: #fff;
+    padding: 20px 0 0 0;
+  }
+  
+  #logo {
+    width: 90px;
+    height: 90px;
+    float: left;
+    margin-right: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 4px;
+  }
+  
+  .site-title {
+    margin: 0;
+    padding-top: 28px;
+    font-size: 24px;
+  }
+  
+  /* ===== Меню ===== */
+  #menu {
+    clear: both;
+    padding-top: 12px;
+  }
+  
+  #menu a {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 8px 16px;
+    color: #fff;
+    border-radius: 6px 6px 0 0;
+  }
+  
+  #menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* ===== Блоки контента ===== */
+  .block {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 24px 26px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #4a7bb8;
+  }
+  
+  .block h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 19px;
+    color: #1f5ea8;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dbe6f3;
+  }
+  
+  /* ===== Список гиперссылок ===== */
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .block ul > li {
+    padding: 5px 0 5px 18px;
+    position: relative;
+  }
+  
+  .block ul > li::before {
+    content: "•";
+    position: absolute;
+    left: 4px;
+    color: #4a7bb8;
+    font-weight: bold;
+  }
+  
+  .block ol {
+    margin: 8px 0 8px 22px;
+  }
+  
+  /* ===== Таблица ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th {
+    background-color: #4a7bb8;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e2eaf5;
+  }
+  
+  tr:nth-child(even) td {
+    background-color: #eef4fc;
+  }
+  
+  tr:nth-child(odd) td {
+    background-color: #ffffff;
+  }
+  
+  /* ===== Форма ===== */
+  form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #c3d2e6;
+    border-radius: 6px;
+    font: inherit;
+    background-color: #fbfcfe;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #4a7bb8;
+    background-color: #fff;
+  }
+  
+  textarea {
+    min-height: 80px;
+  }
+  
+  button[type="submit"] {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background-color: #4a7bb8;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3a6399;
+  }
+  
+  /* ===== Подвал ===== */
+  #footer {
+    width: 100%;
+    background-color: #4a7bb8;
+    color: #fff;
+    text-align: center;
+    padding: 18px 0;
+    margin-top: 30px;
+    font-size: 14px;
+  }
