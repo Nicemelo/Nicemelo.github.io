@@ -47,10 +47,24 @@
 <h2 id="form">Форма</h2>
 
 <form action="/" method="POST">
-  <label>ФИО:<br><input type="text" name="fio"></label><br>
-  <label>Телефон:<br><input type="tel" name="phone"></label><br>
-  <label>E-mail:<br><input type="email" name="email"></label><br>
-  <label>Дата рождения:<br><input type="date" name="date"></label><br>
+  <label>ФИО:<br>
+    <input type="text" name="fio" id="fio"
+           placeholder="Иванов Иван Иванович" required>
+  </label><br>
+
+  <label>Телефон:<br>
+    <input type="tel" name="phone" id="phone"
+           placeholder="+7 (999) 123-45-67" required>
+  </label><br>
+
+  <label>E-mail:<br>
+    <input type="email" name="email" id="email"
+           placeholder="user@mail.ru" required>
+  </label><br>
+
+  <label>Дата рождения:<br>
+    <input type="date" name="date">
+  </label><br>
 
   Пол:
   <label><input type="radio" name="g" value="m"> М</label>
@@ -65,12 +79,31 @@
     </select>
   </label><br>
 
-  <label>Биография:<br><textarea name="bio" rows="4" cols="40"></textarea></label><br>
+  <label>Биография:<br>
+    <textarea name="bio" rows="4" cols="40"></textarea>
+  </label><br>
 
   <label><input type="checkbox" name="ok"> С контрактом ознакомлен(а)</label><br>
 
   <button type="submit">Сохранить</button>
 </form>
+
+<script>
+  // ФИО: удаляем всё, кроме букв, пробела и дефиса
+  document.getElementById('fio').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-zА-Яа-яЁё\s\-]/g, '');
+  });
+
+  // Телефон: оставляем только цифры, +, (, ), -, пробел
+  document.getElementById('phone').addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9+\-\(\)\s]/g, '');
+  });
+
+  // Email: убираем пробелы и всё, кроме латиницы, цифр, @, ., _, -, +
+  document.getElementById('email').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-z0-9@._\-+]/g, '');
+  });
+</script>
 
 <p><a href="#top">Наверх</a></p>
 
