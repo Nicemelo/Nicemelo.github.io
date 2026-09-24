@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Задание 2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header id="header">
+    <div class="container">
+      <a href="https://kubsu.ru/">
+        <img id="logo" src="KybSU.png" alt="Логотип КубГУ">
+      </a>
+      <h1 class="site-title">Название сайта</h1>
+
+      <nav id="menu">
+        <a href="https://kubsu.ru/">Ссылка меню 1</a>
+        <a href="https://kubsu.ru/ru/university">Ссылка 2</a>
+        <a href="https://kubsu.ru/ru/studentam">Ссылка 3</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- КОНТЕНТ -->
+  <main class="container">
+
+    <!-- Список гиперссылок -->
+    <section class="block">
+      <h2>Список гиперссылок</h2>
+      <ul>
+        <li><a href="http://kubsu.ru/">1. КубГУ (http)</a></li>
+        <li><a href="https://kubsu.ru/">2. КубГУ (https)</a></li>
+        <li><a href="https://kubsu.ru/"><img src="KybSU.png" alt="КубГУ" width="60"></a> — 3. ссылка-картинка</li>
+        <li><a href="/ru/university">4. сокращённая ссылка на внутреннюю страницу</a></li>
+        <li><a href="/">5. сокращённая ссылка на главную страницу</a></li>
+        <li><a href="#form">6. ссылка на фрагмент текущей страницы</a></li>
+        <li><a href="https://kubsu.ru/?a=1&amp;b=2&amp;c=3">7. ссылка с тремя параметрами в URL</a></li>
+        <li><a href="https://kubsu.ru/?id=123">8. ссылка с параметром id в URL</a></li>
+        <li><a href="page.html">9. относительная на страницу в текущем каталоге</a></li>
+        <li><a href="about/page.html">10. относительная на страницу в каталоге about</a></li>
+        <li><a href="../page.html">11. относительная на страницу уровнем выше</a></li>
+        <li><a href="../../page.html">12. относительная на страницу двумя уровнями выше</a></li>
+        <li>13. Контекстная ссылка: <a href="https://kubsu.ru/ru/university">перейти в раздел об университете</a>.</li>
+        <li><a href="https://ru.wikipedia.org/wiki/HTML#История">14. ссылка на фрагмент стороннего сайта</a></li>
+        <li>15. Карта:
+          <img src="kbadrat.svg" alt="Карта" usemap="#m" width="200" height="140">
+          <map name="m">
+            <area shape="rect" coords="15,30,95,110" href="https://kubsu.ru/ru/university" alt="Прямоугольник">
+            <area shape="circle" coords="150,70,35" href="https://kubsu.ru/ru" alt="Круг">
+          </map>
+        </li>
+        <li><a href="">16. ссылка с пустым href</a></li>
+        <li><a>17. ссылка без href</a></li>
+        <li><a href="https://www.google.com/" rel="nofollow">18. ссылка с rel="nofollow"</a></li>
+        <li><noindex><a href="https://www.yandex.ru/">19. ссылка, запрещённая для индексации</a></noindex></li>
+        <li>20.
+          <ol>
+            <li><a href="https://kubsu.ru/ru/university" title="Об университете">Университет</a></li>
+            <li><a href="https://kubsu.ru/ru/sveden" title="Сведения об ОО">Сведения об ОО</a></li>
+            <li><a href="https://kubsu.ru/ru/studentam" title="Студентам">Студентам</a></li>
+          </ol>
+        </li>
+        <li><a href="ftp://user:password@example.com/myfile.zip">21. FTP с авторизацией</a></li>
+      </ul>
+    </section>
+
+    <!-- Таблица -->
+    <section class="block">
+      <h2>Таблица</h2>
+      <table>
+        <tr>
+          <th>Факультет</th>
+          <th>Направление</th>
+          <th>Курс</th>
+          <th>Студентов</th>
+        </tr>
+        <tr>
+          <td rowspan="2">ФКТиПМ</td>
+          <td>01.03.02 Прикладная математика</td>
+          <td>1</td>
+          <td>54</td>
+        </tr>
+        <tr>
+          <td>02.03.03 Математическое обеспечение</td>
+          <td>2</td>
+          <td>36</td>
+        </tr>
+        <tr>
+          <td>ФМиКН</td>
+          <td colspan="2">Бакалавриат (без разделения по курсам)</td>
+          <td>120</td>
+        </tr>
+        <tr>
+          <td>ФЭФ</td>
+          <td>38.03.01 Экономика</td>
+          <td>3</td>
+          <td>72</td>
+        </tr>
+        <tr>
+          <td>ФЮФ</td>
+          <td>40.03.01 Юриспруденция</td>
+          <td>4</td>
+          <td>88</td>
+        </tr>
+        <tr>
+          <td>ФРГФ</td>
+          <td>45.03.01 Филология</td>
+          <td>1</td>
+          <td>42</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Форма -->
+    <section class="block" id="form">
+      <h2>Форма</h2>
+      <form action="/" method="POST">
+        <label>ФИО:<br>
+          <input type="text" name="fio" id="fio" required>
+        </label><br>
+
+        <label>Телефон:<br>
+          <input type="tel" name="phone" id="phone" required>
+        </label><br>
+
+        <label>E-mail:<br>
+          <input type="email" name="email" id="email" required>
+        </label><br>
+
+        <label>Дата рождения:<br>
+          <input type="date" name="date">
+        </label><br>
+
+        Пол:
+        <label><input type="radio" name="g" value="m"> М</label>
+        <label><input type="radio" name="g" value="f"> Ж</label><br>
+
+        <label>Языки:<br>
+          <select name="lang[]" multiple size="11">
+            <option>Pascal</option><option>C</option><option>C++</option>
+            <option>JavaScript</option><option>PHP</option><option>Python</option>
+            <option>Java</option><option>Haskell</option><option>Clojure</option>
+            <option>Prolog</option><option>Scala</option>
+          </select>
+        </label><br>
+
+        <label>Биография:<br>
+          <textarea name="bio" rows="4" cols="40"></textarea>
+        </label><br>
+
+        <label><input type="checkbox" name="ok"> С контрактом ознакомлен(а)</label><br>
+
+        <button type="submit">Сохранить</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ПОДВАЛ -->
+  <footer id="footer">
+    <div class="container">
+      © 2026 Подвал сайта
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('fio').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-zА-Яа-яЁё\s\-]/g, '');
+  });
+  document.getElementById('phone').addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9+\-\(\)\s]/g, '');
+  });
+  document.getElementById('email').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-z0-9@._\-+]/g, '');
+  });
+</script>
+
+</body>
+</html>
