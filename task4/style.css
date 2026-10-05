@@ -1,0 +1,15 @@
+/* Настройки, которые не покрывает Bootstrap */
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* Убираем подчёркивание у ссылок в меню */
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
