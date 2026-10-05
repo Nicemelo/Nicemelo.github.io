@@ -1,0 +1,307 @@
+/* ============================================
+   MOBILE FIRST — базовые стили для смартфонов
+   ============================================ */
+
+   * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #222;
+    background-color: #f5f7fa;
+  }
+  
+  a {
+    color: #1f5ea8;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #d94a4a;
+  }
+  
+  /* Контейнер: на мобильном просто 100% ширины с отступами */
+  .container {
+    width: 100%;
+    padding: 0 12px;
+  }
+  
+  /* ===== Шапка (мобильная) ===== */
+  #header {
+    width: 100%;
+    background-color: #4a7bb8;
+    color: #fff;
+    padding: 15px 0 0 0;
+  }
+  
+  /* Лого и название в одну строку */
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+  
+  #logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 3px;
+    margin-right: 12px;
+  }
+  
+  .site-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  /* Меню: вертикальный список на всю ширину */
+  #menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #menu a {
+    display: block;
+    padding: 12px 16px;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    transition: background 0.2s;
+  }
+  
+  #menu a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+  
+  /* ===== Обёртка контента ===== */
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ПОРЯДОК НА МОБИЛЬНОМ:
+     таблица (1) → список (2) → форма (3) */
+  #table-block { order: 1; }
+  #links       { order: 2; }
+  #form-block  { order: 3; }
+  
+  /* ===== Блоки ===== */
+  .block {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 18px 16px;
+    margin: 12px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #4a7bb8;
+  }
+  
+  .block h2 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: #1f5ea8;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dbe6f3;
+  }
+  
+  /* ===== Список ссылок ===== */
+  .block ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .block ul > li {
+    padding: 5px 0 5px 18px;
+    position: relative;
+    border-bottom: 1px dashed #eaeff7;
+  }
+  
+  .block ul > li:last-child {
+    border-bottom: none;
+  }
+  
+  .block ul > li::before {
+    content: "›";
+    position: absolute;
+    left: 4px;
+    color: #4a7bb8;
+    font-weight: bold;
+  }
+  
+  .block ol {
+    margin: 8px 0 8px 22px;
+  }
+  
+  /* ===== Таблица ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  
+  th {
+    background-color: #4a7bb8;
+    color: #fff;
+    padding: 8px 6px;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  td {
+    padding: 8px 6px;
+    border-bottom: 1px solid #e2eaf5;
+  }
+  
+  tr:nth-child(even) td { background-color: #eef4fc; }
+  tr:nth-child(odd)  td { background-color: #ffffff; }
+  
+  /* ===== Форма ===== */
+  form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #c3d2e6;
+    border-radius: 6px;
+    font: inherit;
+    background-color: #fbfcfe;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #4a7bb8;
+    background-color: #fff;
+  }
+  
+  textarea {
+    min-height: 80px;
+  }
+  
+  button[type="submit"] {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background-color: #4a7bb8;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3a6399;
+  }
+  
+  /* ===== Подвал (мобильный) ===== */
+  #footer {
+    width: 100%;
+    background-color: #4a7bb8;
+    color: #fff;
+    text-align: center;
+    padding: 16px 0;
+    margin-top: 24px;
+    font-size: 14px;
+  }
+  
+  /* ============================================
+     TABLET / DESKTOP (от 768px и выше)
+     ============================================ */
+  @media screen and (min-width: 768px) {
+  
+    /* Контейнер ограничиваем 960px и центрируем */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+  
+    /* Шапка: лого и название слева, меню под ними горизонтальное */
+    .header-top {
+      justify-content: flex-start;
+    }
+  
+    #logo {
+      width: 90px;
+      height: 90px;
+      padding: 4px;
+      margin-right: 20px;
+    }
+  
+    .site-title {
+      font-size: 24px;
+    }
+  
+    /* Меню — горизонтальное, как в задании 2 */
+    #menu {
+      flex-direction: row;
+      padding-top: 12px;
+    }
+  
+    #menu a {
+      padding: 10px 20px;
+      border-top: none;
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+  
+    /* На планшете порядок обычный, как в HTML:
+       список (1) → таблица (2) → форма (3) */
+    #links       { order: 1; }
+    #table-block { order: 2; }
+    #form-block  { order: 3; }
+  
+    /* Блоки чуть просторнее */
+    .block {
+      padding: 24px 26px;
+      margin: 20px 0;
+    }
+  
+    .block h2 {
+      font-size: 20px;
+    }
+  
+    /* Таблица побольше */
+    table {
+      font-size: 15px;
+    }
+  
+    th, td {
+      padding: 10px 12px;
+    }
+  
+    /* Форма — максимальная ширина полей */
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="date"],
+    textarea,
+    select {
+      max-width: 420px;
+    }
+  
+    /* Подвал */
+    #footer {
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+  }
