@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>задание 5 — калькулятор заказа</title>
+  <script src="script.js" defer></script>
+  <style>
+    * 
+    {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body 
+    {
+      background: linear-gradient(135deg, #f4f5f7 0%, #dde0e5 100%);
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .calc-card 
+    {
+      width: 100%;
+      max-width: 560px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(40, 40, 50, 0.15);
+      overflow: hidden;
+    }
+    .calc-header 
+    {
+      background: linear-gradient(135deg, #3a3f47, #6b7280);
+      color: #fff;
+      padding: 26px 30px;
+    }
+    .calc-header h1 
+    {
+      font-size: 21px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .calc-header p 
+    {
+      margin: 6px 0 0;
+      opacity: 0.85;
+      font-size: 14px;
+    }
+    .calc-body 
+    {
+      padding: 30px;
+    }
+    .form-group 
+    {
+      margin-bottom: 20px;
+    }
+    .form-label 
+    {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .form-control
+    {
+      width: 100%;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 2px solid #e0e2e6;
+      font-size: 15px;
+      font-family: inherit;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus 
+    {
+      outline: none;
+      border-color: #6b7280;
+      box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.18);
+    }
+    select.form-control 
+    {
+      cursor: pointer;
+    }
+    .btn-calc 
+    {
+      width: 100%;
+      background: linear-gradient(135deg, #3a3f47, #6b7280);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-weight: 600;
+      font-size: 15px;
+      font-family: inherit;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(60, 60, 70, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-calc:hover 
+    {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(60, 60, 70, 0.4);
+    }
+    .btn-calc:active 
+    {
+      transform: translateY(0);
+    }
+    .error-msg 
+    {
+      color: #d32f2f;
+      font-size: 13px;
+      margin-top: 6px;
+      font-weight: 500;
+      min-height: 18px;
+    }
+    .result-box 
+    {
+      background: linear-gradient(135deg, #e8f5e9, #d4ecd7);
+      border: 2px solid #66bb6a;
+      border-radius: 12px;
+      padding: 18px 22px;
+      color: #1b5e20;
+      margin-top: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn 
+    {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-line 
+    {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .result-line .icon 
+    {
+      font-size: 18px;
+    }
+    .result-total 
+    {
+      margin-top: 8px;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+    .result-total .ruble 
+    {
+      font-size: 22px;
+      font-weight: 500;
+      opacity: 0.7;
+      margin-left: 2px;
+    }
+    .hidden 
+    {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="calc-card">
+    <div class="calc-header">
+      <h1>Калькулятор стоимости заказа</h1>
+      <p>Выберите товар и его количество</p>
+    </div>
+
+    <div class="calc-body">
+      <form id="order-form" novalidate>
+
+        <div class="form-group">
+          <label for="product" class="form-label">Товар</label>
+          <select id="product" name="product" class="form-control">
+            <option value="1500">Мышь Logitech M185 — 1 500 ₽</option>
+            <option value="3900">Клавиатура Logitech K380 — 3 900 ₽</option>
+            <option value="7990">Наушники Sony WH-CH520 — 7 990 ₽</option>
+            <option value="12990">Колонки JBL Flip 6 — 12 990 ₽</option>
+            <option value="8900">Веб-камера Logitech C920 — 8 900 ₽</option>
+            <option value="14990">Микрофон HyperX QuadCast — 14 990 ₽</option>
+            <option value="24990">Монитор Samsung Odyssey G4 — 24 990 ₽</option>
+            <option value="29990">Планшет Xiaomi Pad 6 — 29 990 ₽</option>
+            <option value="54990">Телевизор LG 55" 4K — 54 990 ₽</option>
+            <option value="89990">Ноутбук ASUS Vivobook 16 — 89 990 ₽</option>
+            <option value="99990">iPhone 18 Pro — 99 990 ₽</option>
+            <option value="249990">Телевизор Samsung QLED 75" — 249 990 ₽</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="count" class="form-label">Количество</label>
+          <input type="text" id="count" name="count" class="form-control"
+                 placeholder="Например: 3">
+          <div id="error" class="error-msg"></div>
+        </div>
+
+        <button type="submit" class="btn-calc">
+          Посчитать стоимость
+        </button>
+
+        <div id="result" class="result-box hidden">
+          <div class="result-line">
+            <span class="icon">✓</span>
+            <span id="result-details"></span>
+          </div>
+          <div class="result-total">
+            <span id="result-sum">0</span> <span class="ruble">₽</span>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+</body>
+</html>
