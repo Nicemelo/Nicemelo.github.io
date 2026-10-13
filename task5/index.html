@@ -1,39 +1,162 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>задание 5 — калькулятор заказа</title>
-  <script src="script.js" defer></script>
-  <style>
-    * 
-    {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body 
-    {
-      background: linear-gradient(135deg, #f4f5f7 0%, #dde0e5 100%);
-      min-height: 100vh;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .calc-card 
-    {
-      width: 100%;
-      max-width: 560px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 10px 40px rgba(40, 40, 50, 0.15);
-      overflow: hidden;
-    }
-    .calc-header 
-    {
-      background: linear-gradient(135deg, #3a3f47, #6b7280);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор стоимости заказа</title>
+    <script src="script.js" defer></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            background: #f2f2f2;
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        main {
+            max-width: 520px;
+            margin: 40px auto;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .description {
+            margin-bottom: 24px;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-height: 40px;
+            padding: 8px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            background: #fff;
+            font: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #8ab4e8;
+            outline-offset: 1px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: 1px solid #245b91;
+            border-radius: 3px;
+            background: #2f6fae;
+            color: #fff;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #245b91;
+        }
+
+        .error {
+            min-height: 18px;
+            margin: 6px 0 0;
+            color: #b00020;
+            font-size: 14px;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            border: 1px solid #b7d6b7;
+            background: #f2faf2;
+        }
+
+        .result h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        #result-sum {
+            font-size: 22px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            main {
+                margin: 12px auto;
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Калькулятор стоимости заказа</h1>
+        <p class="description">Выберите товар и укажите количество.</p>
+
+        <form id="order-form" novalidate>
+            <div class="form-group">
+                <label for="product">Товар:</label>
+                <select id="product" name="product">
+                    <option value="1500">Мышь Logitech M185 — 1 500 ₽</option>
+                    <option value="3900">Клавиатура Logitech K380 — 3 900 ₽</option>
+                    <option value="7990">Наушники Sony WH-CH520 — 7 990 ₽</option>
+                    <option value="12990">Колонки JBL Flip 6 — 12 990 ₽</option>
+                    <option value="8900">Веб-камера Logitech C920 — 8 900 ₽</option>
+                    <option value="14990">Микрофон HyperX QuadCast — 14 990 ₽</option>
+                    <option value="24990">Монитор Samsung Odyssey G4 — 24 990 ₽</option>
+                    <option value="29990">Планшет Xiaomi Pad 6 — 29 990 ₽</option>
+                    <option value="54990">Телевизор LG 55 дюймов 4K — 54 990 ₽</option>
+                    <option value="89990">Ноутбук ASUS Vivobook 16 — 89 990 ₽</option>
+                    <option value="99990">iPhone 18 Pro — 99 990 ₽</option>
+                    <option value="249990">Телевизор Samsung QLED 75 дюймов — 249 990 ₽</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="count">Количество:</label>
+                <input type="text" id="count" name="count" placeholder="Например: 3" inputmode="numeric">
+                <p id="error" class="error" role="alert"></p>
+            </div>
+
+            <button type="submit">Посчитать стоимость</button>
+        </form>
+
+        <section id="result" class="result" hidden aria-live="polite">
+            <h2>Результат</h2>
+            <p id="result-details"></p>
+            <p>Итого: <strong id="result-sum">0</strong> ₽</p>
+        </section>
+    </main>
+</body>
+</html>
       color: #fff;
       padding: 26px 30px;
     }
