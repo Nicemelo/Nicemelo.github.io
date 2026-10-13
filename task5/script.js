@@ -69,4 +69,4 @@ document.addEventListener("DOMContentLoaded", function () {
       resultSum.textContent = total.toLocaleString("ru-RU");
       result.hidden = false;
   });
-});  
+});
