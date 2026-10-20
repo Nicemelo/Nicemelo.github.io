@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор стоимости услуги</title>
+  <script src="script.js" defer></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #f2f2f2;
+      color: #222;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .description {
+      margin-bottom: 24px;
+      color: #555;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      background: #fff;
+      font: inherit;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: 2px solid #8ab4e8;
+      outline-offset: 1px;
+    }
+
+    .radio-group label {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .radio-group label:hover {
+      background: #f7f9fc;
+    }
+
+    .radio-group input {
+      margin-right: 8px;
+    }
+
+    .radio-group label:has(input:checked) {
+      border-color: #8ab4e8;
+      background: #eef4fb;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .checkbox-label:hover {
+      background: #f7f9fc;
+    }
+
+    .checkbox-label input {
+      margin-right: 10px;
+    }
+
+    .checkbox-label:has(input:checked) {
+      border-color: #8ab4e8;
+      background: #eef4fb;
+    }
+
+    .error {
+      min-height: 18px;
+      margin: 6px 0 0;
+      color: #b00020;
+      font-size: 14px;
+    }
+
+    .result {
+      margin-top: 24px;
+      padding: 16px;
+      border: 1px solid #b7d6b7;
+      background: #f2faf2;
+    }
+
+    .result h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    #result-details {
+      margin: 8px 0;
+      color: #444;
+    }
+
+    #result-sum {
+      font-size: 22px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      main {
+        margin: 12px auto;
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Калькулятор стоимости услуги</h1>
+    <p class="description">Выберите тип услуги и укажите количество.</p>
+
+    <form id="service-form" novalidate>
+
+      <div class="form-group">
+        <label for="quantity" class="form-label">Количество:</label>
+        <input type="text" id="quantity" name="quantity"
+               value="1" inputmode="numeric" placeholder="Например: 3">
+        <p id="error" class="error" role="alert"></p>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label">Тип услуги:</span>
+        <div class="radio-group">
+          <label><input type="radio" name="serviceType" value="1" checked>
+            Диагностика — 1 300 ₽</label>
+          <label><input type="radio" name="serviceType" value="2">
+            Ремонт — от 1 360 ₽</label>
+          <label><input type="radio" name="serviceType" value="3">
+            Установка Windows — 2 500 ₽</label>
+          <label><input type="radio" name="serviceType" value="4">
+            Настройка Wi-Fi — 1 500 ₽</label>
+          <label><input type="radio" name="serviceType" value="5">
+            Заправка картриджа — 360 ₽</label>
+        </div>
+      </div>
+
+      <div class="form-group hidden" id="options-group">
+        <label for="option" class="form-label">Срок ремонта:</label>
+        <select id="option" name="option">
+          <option value="standard">Стандартный (3–5 дней) — +0 ₽</option>
+          <option value="fast">Ускоренный (1–2 дня) — +1 000 ₽</option>
+          <option value="urgent">Срочный (за 1 день) — +2 500 ₽</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="property-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="property" name="property">
+          Пожизненная поддержка — +800 ₽
+        </label>
+      </div>
+
+    </form>
+
+    <section id="result" class="result" aria-live="polite">
+      <h2>Результат</h2>
+      <p id="result-details">Диагностика × 1 шт.</p>
+      <p>Итого: <strong id="result-sum">1 300</strong> ₽</p>
+    </section>
+
+  </main>
+</body>
+</html>
