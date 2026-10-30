@@ -1,286 +1,331 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Задание 8 — Обратная связь</title>
-  <script src="script.js" defer></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Дикая Тропа — походы в горы, к озёрам и активный отдых в хорошей компании.">
+    <meta name="theme-color" content="#173b2d">
+    <title>Дикая Тропа — туристический клуб</title>
 
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    /* === Основной контент === */
-    .main-content {
-      text-align: center;
-      background: #fff;
-      padding: 50px 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      max-width: 500px;
-      width: 100%;
-      animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 { margin-bottom: 20px; font-size: 28px; color: #2b2b2b; }
-    .description { margin-bottom: 30px; color: #666; font-size: 16px; line-height: 1.5; }
-
-    /* Кнопка открытия */
-    .btn-primary {
-      padding: 14px 32px;
-      background: #28a745;
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover {
-      background: #218838;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    }
-
-    /* === Попап === */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(40, 40, 40, 0.6);
-      backdrop-filter: blur(5px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 20px;
-      opacity: 1;
-      transition: opacity 0.3s ease;
-    }
-    .modal-overlay.hidden { display: none; opacity: 0; }
-
-    .modal-window {
-      background: #fff;
-      width: 100%;
-      max-width: 480px;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      position: relative;
-      max-height: 100%;
-      overflow-y: auto;
-      animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes slideDown {
-      from { transform: translateY(50px) scale(0.9); opacity: 0; }
-      to { transform: translateY(0) scale(1); opacity: 1; }
-    }
-
-    .modal-close {
-      position: absolute; top: 15px; right: 20px;
-      background: none; border: none; font-size: 30px;
-      cursor: pointer; color: #aaa;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .modal-close:hover { color: #333; transform: rotate(90deg); }
-    .modal-title { margin-bottom: 25px; font-size: 22px; text-align: center; color: #2b2b2b; }
-
-    /* === Форма === */
-    .form-group { margin-bottom: 18px; }
-    .form-group label {
-      display: block; margin-bottom: 6px; font-weight: 600;
-      font-size: 13px; color: #555; text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Автоматическая заглавная буква (делает CSS) */
-    #fio { text-transform: capitalize; }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="tel"],
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      background: #fafafa;
-      font-family: inherit;
-      font-size: 15px;
-      color: #333;
-      transition: all 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #888;
-      outline: none;
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(136, 136, 136, 0.15);
-    }
-
-    /* Подсветка правильного/неправильного ввода */
-    .input-valid { border-color: #28a745 !important; background-color: #f4fff6 !important; }
-    .input-invalid { border-color: #d9534f !important; background-color: #fff6f6 !important; }
-
-    .error-msg {
-      color: #d9534f; font-size: 12px; margin-top: 5px;
-      min-height: 14px; font-weight: 500;
-    }
-
-    .checkbox-group {
-      display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px;
-    }
-    .checkbox-group input[type="checkbox"] {
-      margin-top: 4px; accent-color: #28a745; cursor: pointer;
-    }
-    .checkbox-group label {
-      font-weight: normal; font-size: 13px; color: #666;
-      line-height: 1.4; cursor: pointer;
-    }
-
-    .form-status {
-      margin: 15px 0; font-size: 14px; font-weight: 600;
-      text-align: center; min-height: 20px;
-    }
-    .form-status.success { color: #28a745; }
-    .form-status.error { color: #d9534f; }
-
-    /* Кнопка отправки */
-    .btn-submit {
-      width: 100%; padding: 14px;
-      background: #28a745; color: #fff;
-      border: none; border-radius: 10px;
-      font-size: 16px; font-weight: 600; cursor: pointer;
-      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-      transition: all 0.3s ease;
-    }
-    .btn-submit:hover:not(:disabled) {
-      background: #218838; transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    }
-
-    /* Стиль для ЗАБЛОКИРОВАННОЙ кнопки */
-    .btn-submit:disabled {
-      background: #ccc;
-      box-shadow: none;
-      cursor: not-allowed;
-      color: #666;
-    }
-
-        /* === Мобильная адаптивность === */
-        @media (max-width: 600px) {
-      .main-content { padding: 30px 20px; }
-      
-      /* Форма прижимается к низу и не скроллится */
-      .modal-overlay { 
-        padding: 0; 
-        align-items: flex-end; 
-      }
-      
-      .modal-window {
-        border-radius: 16px 16px 0 0;
-        /* Убираем прокрутку, сжимая контент */
-        max-height: none; 
-        overflow-y: visible;
-        padding: 20px 15px;
-        animation: slideUpMobile 0.3s ease;
-      }
-
-      /* Уменьшаем отступы полей, чтобы всё влезло */
-      .form-group { margin-bottom: 10px; }
-      .form-group label { font-size: 11px; margin-bottom: 3px; }
-      .form-group input, 
-      .form-group textarea { 
-        padding: 8px 10px; 
-        font-size: 14px; 
-      }
-      .form-group textarea { height: 60px; min-height: 60px; }
-      
-      /* Уменьшаем заголовок и чекбокс */
-      .modal-title { margin-bottom: 15px; font-size: 18px; }
-      .checkbox-group { margin-bottom: 12px; }
-      .checkbox-group label { font-size: 11px; }
-      .btn-submit { padding: 12px; font-size: 15px; }
-    }
-  </style>
+    <!-- Шрифт Montserrat из Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <!-- Первый экран: видео, логотип и навигация -->
+    <header class="hero" id="top">
+        <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <div class="hero__shade" aria-hidden="true"></div>
 
-  <main class="main-content">
-    <h1>Связь со мной</h1>
-    <p class="description">Есть вопросы? Оставьте заявку, и я обязательно увижу и возможно свяжусь с вами в ближайшее время.</p>
-    <button id="openModalBtn" class="btn-primary">Написать мне</button>
-  </main>
+        <div class="container hero__container">
+            <nav class="site-nav" aria-label="Главная навигация">
+                <a class="brand" href="#top" aria-label="Дикая Тропа — на главную">
+                    <span class="brand__mark" aria-hidden="true">△</span>
+                    <span class="brand__text">ДИКАЯ<span>ТРОПА</span></span>
+                </a>
 
-  <div id="modalOverlay" class="modal-overlay hidden">
-    <div class="modal-window">
-      <button id="closeModalBtn" class="modal-close" aria-label="Закрыть">&times;</button>
-      
-      <h2 class="modal-title">Обратная связь</h2>
-      
-      <form id="contactForm" novalidate>
-        
-        <div class="form-group">
-          <label for="fio">ФИО</label>
-          <!-- Добавлен maxlength -->
-          <input type="text" id="fio" name="fio" placeholder="Иванов Иван Иванович" maxlength="50" required>
-          <div class="error-msg" id="error-fio"></div>
+                <button class="menu-toggle" type="button" aria-label="Открыть меню"
+                    aria-controls="main-navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-list" id="main-navigation">
+                    <li><a class="nav-link" href="#about">О клубе</a></li>
+                    <li class="nav-item nav-item--dropdown">
+                        <button class="nav-link nav-dropdown-toggle" type="button" aria-expanded="false">
+                            Туры
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#routes">Однодневные</a></li>
+                            <li><a href="#routes">Многодневные</a></li>
+                            <li><a href="#routes">Восхождения</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link" href="#gallery">Галерея</a></li>
+                    <li><a class="nav-link" href="#journey">Как это работает</a></li>
+                    <li><a class="nav-link nav-link--contact" href="#contact">Связаться</a></li>
+                </ul>
+            </nav>
+
+            <div class="hero__content">
+                <p class="eyebrow hero__eyebrow">ТВОЙ СЛЕД. ТВОЯ ИСТОРИЯ.</p>
+                <h1>Ближе к природе.<br><span>Дальше от рутины.</span></h1>
+                <p class="hero__description">Походы к горным озёрам, маршруты по лесным тропам и приключения, которые хочется вспоминать.</p>
+                <div class="hero__actions">
+                    <a class="button button--primary" href="#routes">Выбрать маршрут</a>
+                    <a class="button button--ghost" href="#about">Узнать о клубе</a>
+                </div>
+            </div>
+
+            <div class="hero__bottom" aria-label="Информация о клубе">
+                <p><span class="hero__bottom-number">01</span> Маленькие группы</p>
+                <p><span class="hero__bottom-number">02</span> Продуманные маршруты</p>
+                <p><span class="hero__bottom-number">03</span> Большие впечатления</p>
+            </div>
         </div>
+    </header>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="example@mail.ru" maxlength="50" required>
-          <div class="error-msg" id="error-email"></div>
+    <main>
+        <!-- Преимущества туристического клуба -->
+        <section class="section about-section" id="about">
+            <div class="container">
+                <div class="section-heading section-heading--split">
+                    <div>
+                        <p class="eyebrow">ПОЧУВСТВУЙ ДИКУЮ СВОБОДУ</p>
+                        <h2>Выходные, которые<br><span>становятся историей</span></h2>
+                    </div>
+                    <p class="section-intro">Мы собираем людей, которым хочется больше свежего воздуха, настоящих разговоров у костра и видов, ради которых стоит подняться пораньше.</p>
+                </div>
+
+                <div class="benefits-grid">
+                    <article class="benefit-card">
+                        <span class="benefit-card__icon" aria-hidden="true">⌁</span>
+                        <h3>Маршруты с душой</h3>
+                        <p>От прогулок у озёр до горных троп — подберём путь под твой уровень подготовки.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="benefit-card__icon" aria-hidden="true">✳</span>
+                        <h3>Рядом свои</h3>
+                        <p>Небольшие группы, дружелюбная атмосфера и поддержка на всём маршруте.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="benefit-card__icon" aria-hidden="true">♧</span>
+                        <h3>Без лишних забот</h3>
+                        <p>Заранее объясним, что взять с собой, где встречаемся и чего ждать в пути.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Популярные маршруты -->
+        <section class="section routes-section" id="routes">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">ВЫБЕРИ СВОЁ ПРИКЛЮЧЕНИЕ</p>
+                    <h2>Популярные <span>маршруты</span></h2>
+                    <p class="section-intro">Каждый маршрут — это новый пейзаж, свежий воздух и повод отключить уведомления.</p>
+                </div>
+
+                <div class="routes-grid">
+                    <article class="route-card">
+                        <div class="route-card__image-wrap">
+                            <img src="1.jpeg" alt="Горное озеро в окружении зелёных склонов" loading="lazy">
+                            <span class="route-card__tag">На один день</span>
+                        </div>
+                        <div class="route-card__body">
+                            <p class="route-card__meta">◷ 5–6 часов <span>•</span> Лёгкий уровень</p>
+                            <h3>Тропа к синему озеру</h3>
+                            <p>Спокойный маршрут с красивыми остановками для фото и отдыха у воды.</p>
+                            <a class="text-link" href="#contact">Узнать подробности</a>
+                        </div>
+                    </article>
+
+                    <article class="route-card">
+                        <div class="route-card__image-wrap">
+                            <img src="2.jpeg" alt="Высокие горные вершины на фоне неба" loading="lazy">
+                            <span class="route-card__tag">На выходные</span>
+                        </div>
+                        <div class="route-card__body">
+                            <p class="route-card__meta">◷ 2 дня <span>•</span> Средний уровень</p>
+                            <h3>Выше облаков</h3>
+                            <p>Ночёвка на природе, рассвет в горах и панорамы, ради которых стоит идти.</p>
+                            <a class="text-link" href="#contact">Узнать подробности</a>
+                        </div>
+                    </article>
+
+                    <article class="route-card">
+                        <div class="route-card__image-wrap">
+                            <img src="3.jpeg" alt="Водопад среди скал и зелёного леса" loading="lazy">
+                            <span class="route-card__tag">Активный день</span>
+                        </div>
+                        <div class="route-card__body">
+                            <p class="route-card__meta">◷ 7 часов <span>•</span> Средний уровень</p>
+                            <h3>Лес, скалы и водопад</h3>
+                            <p>Чуть больше движения, лесные тропы и прохладный воздух у водопада.</p>
+                            <a class="text-link" href="#contact">Узнать подробности</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Галерея из восьми изображений -->
+        <section class="section gallery-section" id="gallery">
+            <div class="container">
+                <div class="section-heading section-heading--split">
+                    <div>
+                        <p class="eyebrow">КРАСИВО ТАМ, ГДЕ МЫ ИДЁМ</p>
+                        <h2>Вдохновение <span>для пути</span></h2>
+                    </div>
+                    <p class="section-intro">Немного видов из мира, в котором утро начинается с гор, а лучший сигнал — шум реки.</p>
+                </div>
+
+                <div class="gallery-slider" aria-label="Галерея пейзажей">
+                    <div class="gallery-slider__toolbar">
+                        <p>Моменты, ради которых стоит идти</p>
+                        <div class="gallery-slider__arrows">
+                            <button class="slider-arrow slider-arrow--prev" type="button" aria-label="Предыдущее изображение">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M15 18l-6-6 6-6"></path>
+                                </svg>
+                            </button>
+                            <button class="slider-arrow slider-arrow--next" type="button" aria-label="Следующее изображение">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M9 18l6-6-6-6"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="gallery-slider__viewport" tabindex="0" aria-label="Слайдер. Для переключения используйте стрелки клавиатуры">
+                        <div class="gallery-slider__track">
+                            <figure class="gallery-slide">
+                                <img src="1.1.jpeg" alt="Озеро отражает зелёные горы" loading="lazy">
+                                <figcaption>Тишина горного озера</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="2.jpeg" alt="Скалистые вершины высоких гор" loading="lazy">
+                                <figcaption>Там, где начинается высота</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="1.jpeg" alt="Чистое озеро у подножия гор" loading="lazy">
+                                <figcaption>Отдых у воды</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="1.2.jpeg" alt="Солнечный свет пробивается через лес" loading="lazy">
+                                <figcaption>Лесная тропа</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="1.3.jpeg" alt="Горы под звёздным небом" loading="lazy">
+                                <figcaption>Ночь под звёздами</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="3.jpeg" alt="Водопад падает среди скал" loading="lazy">
+                                <figcaption>Сила воды</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="1.4.jpeg" alt="Широкий природный пейзаж" loading="lazy">
+                                <figcaption>Простор без границ</figcaption>
+                            </figure>
+                            <figure class="gallery-slide">
+                                <img src="1.5.jpeg" alt="Зелёный лес в тёплом свете" loading="lazy">
+                                <figcaption>Дышать полной грудью</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                    <div class="gallery-slider__footer">
+                        <div class="slider-dots" aria-label="Выбор слайда"></div>
+                        <p class="slider-counter" aria-live="polite">01 / 08</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Этапы участия в походе -->
+        <section class="section journey-section" id="journey">
+            <div class="container journey-layout">
+                <div class="journey-copy">
+                    <p class="eyebrow">ПЕРВЫЙ ШАГ ПРОЩЕ, ЧЕМ КАЖЕТСЯ</p>
+                    <h2>Тебе не нужно<br><span>быть альпинистом</span></h2>
+                    <p>Выбери подходящий маршрут, расскажи нам о своём опыте — и мы подскажем, как подготовиться к путешествию.</p>
+                    <a class="button button--primary" href="#contact">Обсудить поход</a>
+                </div>
+
+                <ol class="journey-steps">
+                    <li>
+                        <span class="journey-steps__number">01</span>
+                        <div>
+                            <h3>Оставь заявку</h3>
+                            <p>Напиши нам, куда хочется отправиться и когда тебе удобно.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="journey-steps__number">02</span>
+                        <div>
+                            <h3>Подготовься к пути</h3>
+                            <p>Пришлём список вещей, место встречи и детали маршрута.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="journey-steps__number">03</span>
+                        <div>
+                            <h3>Наслаждайся моментом</h3>
+                            <p>Знакомься с командой, иди в своём темпе и собирай впечатления.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Форма обратной связи -->
+        <section class="section contact-section" id="contact">
+            <div class="container contact-layout">
+                <div class="contact-copy">
+                    <p class="eyebrow">ДАВАЙ НАЙДЁМ ТВОЙ МАРШРУТ</p>
+                    <h2>Готов к <span>приключению?</span></h2>
+                    <p>Расскажи, какой отдых тебе близок. Мы ответим на вопросы и поможем выбрать следующий путь.</p>
+
+                    <div class="contact-note">
+                        <span class="contact-note__icon" aria-hidden="true">i</span>
+                        <p><strong>Не знаешь, с чего начать?</strong><br>Это нормально — подберём первый поход вместе.</p>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="name">Имя</label>
+                            <input id="name" name="name" type="text" autocomplete="name" placeholder="Как к тебе обращаться" required minlength="2" maxlength="80" data-validate="name">
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required data-validate="email">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="phone">Телефон</label>
+                        <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+371 (000) 00000" required maxlength="20" data-validate="phone">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Расскажи, какой поход ищешь..." required minlength="10" maxlength="1000" data-validate="message"></textarea>
+                    </div>
+
+                    <div class="form-consent">
+                        <input id="consent" name="consent" type="checkbox" value="yes" required>
+                        <label for="consent">Я согласен(на) на обработку указанных данных для ответа на мой запрос.</label>
+                    </div>
+
+                    <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+
+                    <button class="button button--primary form-submit" type="submit" disabled>
+                        Отправить сообщение
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="brand brand--footer" href="#top" aria-label="Дикая Тропа — наверх">
+                <span class="brand__mark" aria-hidden="true">△</span>
+                <span class="brand__text">ДИКАЯ<span>ТРОПА</span></span>
+            </a>
+            <p>Больше природы. Меньше спешки.</p>
+            <a class="footer-top" href="#top">Наверх</a>
+            <small>© 2026 Дикая Тропа. Учебный проект.</small>
         </div>
-
-        <div class="form-group">
-          <label for="phone">Телефон</label>
-          <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" maxlength="20" required>
-          <div class="error-msg" id="error-phone"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="org">Организация</label>
-          <input type="text" id="org" name="org" placeholder="ООО Ромашка" maxlength="60">
-        </div>
-
-        <div class="form-group">
-          <label for="message">Сообщение</label>
-          <textarea id="message" name="message" rows="3" placeholder="Ваше сообщение..." maxlength="500" required></textarea>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="policy" name="policy" required>
-          <label for="policy">Я согласен с политикой обработки персональных данных</label>
-        </div>
-
-        <div id="formStatus" class="form-status"></div>
-
-        <!-- Кнопка по умолчанию disabled -->
-        <button type="submit" id="submitBtn" class="btn-submit" disabled>Отправить сообщение</button>
-      </form>
-    </div>
-  </div>
-
+    </footer>
 </body>
 </html>
